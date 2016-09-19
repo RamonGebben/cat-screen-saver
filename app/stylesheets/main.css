@@ -6,20 +6,27 @@
 html, body { margin: 0; padding: 0;}
 
 body {
-  background: #282828;
+  background: #000;
   color: #f9f9f9;
 }
 
-
-.image {
-  background-size: cover;
-  background-position: center;
+.image img {
+  max-width: 80vw;
+  max-height: 80vh;
+  box-shadow: 0 0 20px #444;
 }
 
-/*.image.small { flex-grow: 0.2 }
-.image.mid { flex-grow: 0.5 }
-.image.big { flex-grow: 1 }*/
-
 .scene {
-  /*display: flex;*/
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100vh;
+}
+
+.loading {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: space-around;;
+  align-items: center;
 }

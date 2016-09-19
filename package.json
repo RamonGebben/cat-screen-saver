@@ -4,9 +4,15 @@
   "description": "A very basic screen saver",
   "main": "webpack.config.js",
   "dependencies": {
+    "exports-loader": "^0.6.3",
+    "freewall": "^1.0.8",
+    "imports-loader": "^0.6.5",
+    "jquery": "^2.2.1",
     "lodash": "^4.5.1",
     "react": "^0.14.7",
-    "react-dom": "^0.14.7"
+    "react-dom": "^0.14.7",
+    "react-masonry-component": "^4.0.0",
+    "whatwg-fetch": "^0.11.0"
   },
   "devDependencies": {
     "babel-core": "^5.6.17",
@@ -23,7 +29,8 @@
   "private": true,
   "scripts": {
     "build": "TARGET=build webpack",
-    "start": "TARGET=dev webpack-dev-server --devtool eval-source --progress --colors --hot --inline --history-api-fallback"
+    "start": "TARGET=dev webpack-dev-server --devtool eval-source --progress --colors --hot --inline --history-api-fallback",
+    "deploy": "npm run build; git add build && git commit -m 'deploy with npm'; git subtree push --prefix build origin gh-pages"
   },
   "repository": {
     "type": "git",

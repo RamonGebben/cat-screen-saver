@@ -1,5 +1,13 @@
 import React from 'react';
 import Image from './Image';
+import $ from 'jquery';
+import Masonry from 'react-masonry-component';
+
+function getRandomSize(min, max) {
+  return Math.round(Math.random() * (max - min) + min);
+}
+
+const masonryOptions = { transitionDuration: 0 };
 
 class Scene extends React.Component {
 
@@ -12,13 +20,11 @@ class Scene extends React.Component {
   }
 
   render() {
-    let layout = this.props.set.map((image, i) => {
-      return <Image url={image} key={i} height={window.innerHeight / this.props.set.length }/>
-    });
-
-      return(<div className='scene'>
-          {layout}
-      </div>);
+    return (
+          <div className='scene'>
+            <Image url={this.props.image} />
+          </div>
+        );
   }
 
 }

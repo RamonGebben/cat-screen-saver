@@ -11,8 +11,8 @@ const modelData = (data) => {
   .map((item) => item.data.url);
 }
 
-const getJson = (after) => {
-  let url = after ? `https://www.reddit.com/r/cats/.json?count=25&after=${after}` : 'https://www.reddit.com/r/cats/.json?count=25';
+const getJson = (subreddit, after) => {
+  let url = after ? `https://www.reddit.com/r/${subreddit}/.json?count=25&after=${after}` : `https://www.reddit.com/r/${subreddit}/.json?count=25`;
   return fetch(url).then(res => res.json())
 }
 
@@ -21,7 +21,7 @@ class Index extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      looping: false
+      looping: false,
     }
     this.images = [];
     this.after = null;
@@ -29,7 +29,7 @@ class Index extends React.Component {
 
   getImages(amount) {
     if(this.images.length < amount){
-      getJson(this.after).then(res => {
+      getJson(this.props.subreddit, this.after).then(res => {
         this.after = res.data.after;
         this.images = _.uniq(this.images.concat(modelData(res.data.children)));
         this.getImages(amount);
@@ -46,24 +46,22 @@ class Index extends React.Component {
 
   startImageLoop(){
     if( !this.state.looping ){
-      console.log('Staring loop');
       setInterval(() => {
-        console.log('interation');
-        let currentSet = this.images.splice(0, Math.ceil(Math.random() * 5));
+        let currentImage = this.images.splice(0, 1);
         this.setState({
           looping: true,
-          currentSet
+          currentImage
         });
 
         if(this.images.length < 10 ){
           this.getImages(50);
         }
-      }, 5000);
+      }, 10000);
     }
   }
 
   render() {
-    if( !this.state.currentSet ){
+    if( !this.state.currentImage ){
       return this.renderLoading();
     }else {
       return this.renderScene();
@@ -72,11 +70,11 @@ class Index extends React.Component {
 
   renderScene(){
     this.startImageLoop();
-    return(<Scene set={this.state.currentSet} />)
+    return(<Scene image={this.state.currentImage} />)
   }
 
   renderLoading(){
-    return(<div className='loading'>Loading...</div>)
+    return(<div className='loading'><img src='https://cdn.rawgit.com/SamHerbert/SVG-Loaders/master/svg-loaders/circles.svg'/></div>)
   }
 }
 
